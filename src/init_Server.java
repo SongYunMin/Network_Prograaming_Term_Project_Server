@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.*;
+
 
 public class init_Server {
     // 자판기 초기화 코드 받을 준비
@@ -33,6 +35,7 @@ public class init_Server {
 
             String clientMessage = dataInputStream.readUTF();
             System.out.println("clientMessage : " + clientMessage);
+
 
             dataOutputStream.writeUTF("자판기 초기화 완료");
             dataOutputStream.flush();

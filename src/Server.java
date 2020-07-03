@@ -11,6 +11,8 @@ public class Server {
 
         init_Server init = new init_Server();
         init.initServer();
+        dbconn db = new dbconn();
+        db.SQLTransfer();
 //
 //        ServerSocket serverSocket = null;
 //        Socket socket = null;
