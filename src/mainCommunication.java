@@ -18,13 +18,11 @@ public class mainCommunication {
     public void waitClientClick() {
         try {
             serverSocket = new ServerSocket(9999);
-            System.out.println("Main Communication Connect Ready");
-
-            System.out.println("Client Connect OK");
-            System.out.println("socket : " + socket);
+            System.out.println("Main Communication Client Connect Ready");
             while (true) {
                 socket = serverSocket.accept();
-
+                System.out.println("Main Communication Client Connect OK");
+                System.out.println("socket : " + socket);
                 // 입력 위한 스트림 생성
                 inputStream = socket.getInputStream();
                 dataInputStream = new DataInputStream(inputStream);
@@ -33,14 +31,15 @@ public class mainCommunication {
                 outputStream = socket.getOutputStream();
                 dataOutputStream = new DataOutputStream(outputStream);
 
-
                 String clientMessage = dataInputStream.readUTF();
                 System.out.println("clientMessage : " + clientMessage);
 
                 dataOutputStream.writeUTF("SQL 전송 완료");
                 dataOutputStream.flush();
                 //socket.setKeepAlive(true);        // 연결 지속 여부
-                if (clientMessage.equals("stop")) break;
+                if (clientMessage.equals("stop\r\n")){
+                    System.exit(0);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

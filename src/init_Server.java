@@ -19,10 +19,10 @@ public class init_Server {
     public void initServer() throws IOException {
         try{
             serverSocket = new ServerSocket(9000);
-            System.out.println("Client Connect Ready");
+            System.out.println("Initialization Client Connect Ready");
 
             socket = serverSocket.accept();
-            System.out.println("Client Connect OK");
+            System.out.println("Initialization Client Connect OK");
             System.out.println("socket : " + socket);
 
             inputStream = socket.getInputStream();
@@ -35,12 +35,16 @@ public class init_Server {
             SQL = clientMessage;
             System.out.println("clientMessage : " + clientMessage);
 
+            dbconn db = new dbconn();
+            String managementSQL = "INSERT INTO `management` (`day_Sales`, `month_Sales`, `All_Sales`) VALUES ('0', '0', '0')";
+            db.Connect(SQL);
+            System.out.println("Vending Machine");
+            db.Connect(managementSQL);
+
             dataOutputStream.writeUTF("자판기 초기화 완료");
             System.out.println("자판기 초기화 완료");
             dataOutputStream.flush();
 
-            dbconn db = new dbconn();
-            db.Connect(SQL);
         } catch (Exception e){
             e.printStackTrace();
         } finally {
