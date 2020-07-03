@@ -9,7 +9,6 @@ public class Server {
         mainCommunication Communication = new mainCommunication();
         Communication.waitClientClick();
 
-
 //        ServerSocket serverSocket = null;
 //        Socket socket = null;
 //

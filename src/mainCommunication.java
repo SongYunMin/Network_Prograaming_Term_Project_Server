@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class mainCommunication {
+    public static String clientStatus = null;
     ServerSocket serverSocket = null;
     Socket socket = null;
 
@@ -20,7 +21,9 @@ public class mainCommunication {
             serverSocket = new ServerSocket(9999);
             System.out.println("Main Communication Client Connect Ready");
             while (true) {
+                // 연결 대기
                 socket = serverSocket.accept();
+                // 연결된  소켓 출력
                 System.out.println("Main Communication Client Connect OK");
                 System.out.println("socket : " + socket);
                 // 입력 위한 스트림 생성
@@ -33,11 +36,23 @@ public class mainCommunication {
 
                 String clientMessage = dataInputStream.readUTF();
                 System.out.println("clientMessage : " + clientMessage);
+                if (clientMessage.equals("insert")) {             // status 전송 과정에서 insert 라면
+                    clientStatus = "insert";
+                } else if (clientMessage.equals("select")) {      // status 전송 과정에서 select 라면
+                    clientStatus = "select";
+                } else if (clientMessage.equals("update")) {
+                    clientStatus = "update";
+                } else if (clientMessage.equals("init")) {
+                    clientStatus = "init";
+                } else {                                         // 쿼리문 전달이라면
+                    dbconn db = new dbconn();
+                    db.Connect(clientMessage);
+                }
 
                 dataOutputStream.writeUTF("SQL 전송 완료");
                 dataOutputStream.flush();
                 //socket.setKeepAlive(true);        // 연결 지속 여부
-                if (clientMessage.equals("stop\r\n")){
+                if (clientMessage.equals("stop\r\n")) {
                     System.exit(0);
                 }
             }
