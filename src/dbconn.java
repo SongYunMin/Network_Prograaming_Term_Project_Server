@@ -2,8 +2,9 @@ import java.sql.*;
 
 public class dbconn {
     Connection conn = null;
+    PreparedStatement pstmt = null;
 
-    public void SQLTransfer() {
+    public void Connect(String SQL) throws SQLException {
         String server = "localhost";            // Server Address
         String database = "Vending_machine";    // Vending_machine
         String user_name = "root";
@@ -25,11 +26,36 @@ public class dbconn {
             e.printStackTrace();
         }
 
+        insertData(SQL);
+
         // 3.해제
         try {
             if (conn != null)
                 conn.close();
         } catch (SQLException e) {
+        }
+    }
+
+    public void insertData(String SQL) throws SQLException {
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.executeUpdate();
+
+            System.out.println("Table 에 새로운 Record 를 추가했습니다.");
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("레코드 추가 실패");
+        } finally {
+            if(pstmt != null) try {
+                pstmt.close();
+            } catch (SQLException sqle){
+
+            }
+            if(conn != null) try{
+                conn.close();
+            } catch (SQLException sqle){
+
+            }
         }
     }
 }

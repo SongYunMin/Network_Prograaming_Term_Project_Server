@@ -1,19 +1,15 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class Server {
-
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws SQLException, IOException {
+        String initMessage;
         init_Server init = new init_Server();
         init.initServer();
-        dbconn db = new dbconn();
-        db.SQLTransfer();
-//
+        mainCommunication Communication = new mainCommunication();
+        Communication.waitClientClick();
+
+
 //        ServerSocket serverSocket = null;
 //        Socket socket = null;
 //
