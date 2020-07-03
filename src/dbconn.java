@@ -58,12 +58,14 @@ public class dbconn {
             }
         }
     }
-//
-//    public String SelectData(){
-//        try{
-//
-//        } catch (Exception e){
-//
-//        }
-//    }
+
+    // TODO : DB 에서 가져온 후, 클라이언트 자판기에 Set해줘야 함
+    public String SelectData(){
+        try{
+
+        } catch (Exception e){
+
+        }
+        return "g";
+    }
 }
