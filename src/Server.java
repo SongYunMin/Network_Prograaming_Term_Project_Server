@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Server {
+    public static int vendingNumber;
     public static void main(String[] args) throws SQLException, IOException {
         String initMessage;
         init_Server init = new init_Server();

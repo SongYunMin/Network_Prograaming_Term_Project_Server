@@ -17,6 +17,7 @@ public class mainCommunication {
     DataInputStream dataInputStream = null;
 
     public void waitClientClick() {
+        String clientSending = null;
         try {
             serverSocket = new ServerSocket(9999);
             System.out.println("Main Communication Client Connect Ready");
@@ -46,10 +47,14 @@ public class mainCommunication {
                     clientStatus = "init";
                 } else {                                         // 쿼리문 전달이라면
                     dbconn db = new dbconn();
-                    db.Connect(clientMessage);
+                    clientSending = db.Connect(clientMessage);
                 }
 
                 dataOutputStream.writeUTF("SQL 전송 완료");
+                assert false;
+                if(clientSending != null) {
+                    dataOutputStream.writeUTF(clientSending);
+                }
                 dataOutputStream.flush();
                 //socket.setKeepAlive(true);        // 연결 지속 여부
                 if (clientMessage.equals("stop\r\n")) {
