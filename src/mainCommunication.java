@@ -41,22 +41,25 @@ public class mainCommunication {
                     clientStatus = "insert";
                 } else if (clientMessage.equals("select")) {      // status 전송 과정에서 select 라면
                     clientStatus = "select";
-                } else if (clientMessage.equals("update")) {
+                } else if (clientMessage.equals("update")) {      // status 전송 과정에서 update 라면
                     clientStatus = "update";
                 } else if (clientMessage.equals("init")) {
                     clientStatus = "init";
+                } else if (clientMessage.equals("money")){
+                    clientStatus = "money";
                 } else {                                         // 쿼리문 전달이라면
                     dbconn db = new dbconn();
                     clientSending = db.Connect(clientMessage);
                 }
-
                 dataOutputStream.writeUTF("SQL 전송 완료");
-                assert false;
+
+                // 결과 값이 null 이 아니라면 클라이언트로 결과 값 전송
                 if(clientSending != null) {
                     dataOutputStream.writeUTF(clientSending);
+                    dataOutputStream.flush();
                 }
                 dataOutputStream.flush();
-                //socket.setKeepAlive(true);        // 연결 지속 여부
+
                 if (clientMessage.equals("stop\r\n")) {
                     System.exit(0);
                 }

@@ -3,7 +3,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 
-
 public class init_Server {
     public static int vendingNum;
     // 자판기 초기화 코드 받을 준비
@@ -39,10 +38,10 @@ public class init_Server {
             System.out.println("clientMessage : " + clientMessage);
 
             dbconn db = new dbconn();
-            String managementSQL = "INSERT INTO `management` (`day_Sales`, `month_Sales`, `All_Sales`) VALUES ('0', '0', '0');";
-            db.Connect(SQL);
+            db.Connect(SQL);                                // vending Insert 문
             System.out.println("Vending Machine");
-            db.Connect(managementSQL);
+            String managementSQL = "INSERT INTO `management` (`day_Sales`, `month_Sales`, `All_Sales`) VALUES ('0', '0', '0');";
+            db.Connect(managementSQL);                      // management Insert 문
 
             dataOutputStream.writeUTF("자판기 초기화 완료");
             System.out.println("자판기 초기화 완료");
@@ -55,8 +54,6 @@ public class init_Server {
             if (outputStream != null) outputStream.close();
             if (dataInputStream != null) dataInputStream.close();
             if (inputStream != null) inputStream.close();
-//            mainCommunication conn = new mainCommunication();
-//            conn.waitClientClick();
         }
     }
 }
